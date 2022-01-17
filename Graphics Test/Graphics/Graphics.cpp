@@ -3,7 +3,6 @@
 Graphics::Graphics() {
     setWindowSize(0, 0);
     setRenderer(nullptr);
-
     fillScreen();
 }
 
@@ -18,17 +17,16 @@ void Graphics::setWindowSize(int window_width, int window_height) {
     height = window_height;
 }
 
-void Graphics::getWindowSizeRef(int& window_width, int& window_height) {
-    window_width = width;
-    window_height = height;
-}
-
 void Graphics::setRenderer(SDL_Renderer* rend) {
     renderer = rend;
 }
 
 void Graphics::present() {
     SDL_RenderPresent(renderer);
+}
+
+int Graphics::getArea() {
+    return width * height;
 }
 
 void Graphics::setColor(Uint8 r, Uint8 g, Uint8 b) {
@@ -48,4 +46,8 @@ void Graphics::drawPoint(int x, int y) {
 void Graphics::drawPoint(int x, int y, Uint8 r, Uint8 g, Uint8 b) {
     setColor(r, g, b);
     SDL_RenderDrawPoint(renderer, x, y);
+}
+
+double Graphics::distance(double x0, double y0, double x1, double y1) {
+    return SDL_sqrt(SDL_pow(x1 - x0, 2) + SDL_pow(y1 - y0, 2));
 }

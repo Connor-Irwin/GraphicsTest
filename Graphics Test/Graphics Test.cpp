@@ -30,7 +30,7 @@ int main(int argc, char* argv[]) {
     }
 
     // Create a renderer
-    Uint32 render_flags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC; // SDL_RENDERER_SOFTWARE
+    Uint32 render_flags = SDL_RENDERER_ACCELERATED; // SDL_RENDERER_SOFTWARE
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, render_flags);
 
     if (!renderer) {
@@ -58,19 +58,10 @@ int main(int argc, char* argv[]) {
                 break;
             }
             
-            case SDL_WINDOWEVENT_MAXIMIZED: {
-                SDL_MaximizeWindow(window);
-                break;
-            }
-
-            case SDL_WINDOWEVENT_RESTORED: {
-                SDL_RestoreWindow(window);
-                break;
-            }
-
-            case SDL_WINDOWEVENT_RESIZED: {
+            case 8192: {
                 SDL_GetWindowSize(window, &width, &height);
-                cout << "Resize: " << width << ", " << height;
+                graphics->setWindowSize(width, height);
+                cout << "Size changed: " << width << ", " << height << endl;
                 break;
             }
 
@@ -145,6 +136,7 @@ int main(int argc, char* argv[]) {
             }
 
             default: {
+                cout << "Uncaught event: " << event.type << endl;
                 break;
             }
             }
@@ -155,8 +147,6 @@ int main(int argc, char* argv[]) {
             graphics->update();
         }
 
-        //Draw to window and loop
-        SDL_RenderPresent(renderer);
         SDL_Delay(1000 / FPS);
     }
 

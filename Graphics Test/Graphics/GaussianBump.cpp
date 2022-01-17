@@ -1,12 +1,12 @@
 #include "GaussianBump.h"
 
 double GaussianBump::bump(double x, double y, double x0, double y0, double sX, double sY) {
-    return exp(-((pow((x - x0), 2)) / (2 * pow(sX, 2)) + (pow((y - y0), 2)) / (2 * pow(sY, 2))));
+    return SDL_exp(-((SDL_pow((x - x0), 2)) / (2 * SDL_pow(sX, 2)) + (SDL_pow((y - y0), 2)) / (2 * SDL_pow(sY, 2))));
 }
 
 GaussianBump::GaussianBump(int window_width, int window_height, SDL_Renderer* rend) {
-    //setWindowSize(window_height, window_height);
-    //setRenderer(rend);
+    setWindowSize(window_height, window_height);
+    setRenderer(rend);
 
     size = 1;
 
@@ -22,9 +22,8 @@ void GaussianBump::update() {
 
             drawPoint(x, y, c, c, c);
         }
-
-        present();
     }
 
+    present();
     size++;
 }
