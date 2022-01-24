@@ -10,62 +10,92 @@ CrawlingAnt::CrawlingAnt(int window_width, int window_height, SDL_Renderer* rend
 
     edginess = 1;
 
+    r = 255;
+    g = 178;
+    b = 0;
+    a = 255;
+
+    fillScreen();
+}
+
+CrawlingAnt::CrawlingAnt(int window_width, int window_height, SDL_Renderer* rend, Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
+    setWindowSize(window_width, window_height);
+    setRenderer(rend);
+
+    x = window_width / 2;
+    y = window_height / 2;
+
+    edginess = 1;
+
+    this->r = r;
+    this->g = g;
+    this->b = b;
+    this->a = a;
+
 	fillScreen();
 }
 
 void CrawlingAnt::update() {
     dist_from_center = (int)distance(x, y, width / 2, height / 2);
-    dist_from_right_edge = (int)distance(x, y, width, y);
-    dist_from_left_edge = (int)distance(x, y, 0, y);
-    dist_from_bottom_edge = (int)distance(x, y, x, height);
-    dist_from_top_edge = (int)distance(x, y, x, 0);
+    dist_from_east_edge = (int)distance(x, y, width, y);
+    dist_from_west_edge = (int)distance(x, y, 0, y);
+    dist_from_south_edge = (int)distance(x, y, x, height);
+    dist_from_north_edge = (int)distance(x, y, x, 0);
 
     direction = rand() % 5;
 
-    int x_move = rand() % width;
-    int y_move = rand() % height;
+    //int x_move = rand() % width;
+    //int y_move = rand() % height;
 
     switch (direction) {
-    case 1: { // Right
-        if (dist_from_right_edge < dist_from_center / edginess || x > width) direction = rand() % 5;
+    case 1: { // East
+        if (dist_from_east_edge < dist_from_center / edginess || x > width) direction = rand() % 5;
 
-        x++;
-        drawPoint(x, y, 255, 178, 0);
-        x++;
-        drawPoint(x, y, 255, 178, 0);
-
-        break;
-    }
-
-    case 2: { // Left
-        if (dist_from_left_edge < dist_from_center / edginess || x < 0) direction = rand() % 5;
-
-        x--;
-        drawPoint(x, y, 255, 178, 0);
-        x--;
-        drawPoint(x, y, 255, 178, 0);
+        if (x < width - 1) {
+            x++;
+            drawPoint(x, y, r, g, b, a);
+            x++;
+            drawPoint(x, y, r, g, b, a);
+        }
 
         break;
     }
 
-    case 3: { // Down
-        if (dist_from_bottom_edge < dist_from_center / edginess || y > height) direction = rand() % 5;
+    case 2: { // West
+        if (dist_from_west_edge < dist_from_center / edginess || x < 0) direction = rand() % 5;
 
-        y--;
-        drawPoint(x, y, 255, 178, 0);
-        y--;
-        drawPoint(x, y, 255, 178, 0);
+        if (x > 0) {
+            x--;
+            drawPoint(x, y, r, g, b, a);
+            x--;
+            drawPoint(x, y, r, g, b, a);
+        }
 
         break;
     }
 
-    case 4: { // Up
-        if (dist_from_top_edge < dist_from_center / edginess || y < 0) direction = rand() % 5;
+    case 3: { // South
+        if (dist_from_south_edge < dist_from_center / edginess || y > height) direction = rand() % 5;
 
-        y++;
-        drawPoint(x, y, 255, 178, 0);
-        y++;
-        drawPoint(x, y, 255, 178, 0);
+        if (y < height - 1) {
+            y++;
+            drawPoint(x, y, r, g, b, a);
+            y++;
+            drawPoint(x, y, r, g, b, a);
+        }
+
+        break;
+    }
+
+    case 4: { // North
+        if (dist_from_north_edge < dist_from_center / edginess || y < 0) direction = rand() % 5;
+
+        if (y > 0) {
+            y--;
+            drawPoint(x, y, r, g, b, a);
+            y--;
+            drawPoint(x, y, r, g, b, a);
+        }
 
         break;
     }

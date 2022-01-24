@@ -3,12 +3,14 @@
 Graphics::Graphics() {
     setWindowSize(0, 0);
     setRenderer(nullptr);
+    setWindow(nullptr);
     fillScreen();
 }
 
-Graphics::Graphics(int window_width, int window_height, SDL_Renderer* rend) {
+Graphics::Graphics(int window_width, int window_height, SDL_Renderer* rend, SDL_Window* win = nullptr) {
     setWindowSize(window_height, window_height);
     setRenderer(rend);
+    setWindow(win);
     fillScreen();
 }
 
@@ -21,6 +23,10 @@ void Graphics::setRenderer(SDL_Renderer* rend) {
     renderer = rend;
 }
 
+void Graphics::setWindow(SDL_Window* win) {
+    window = win;
+}
+
 void Graphics::present() {
     SDL_RenderPresent(renderer);
 }
@@ -29,8 +35,8 @@ int Graphics::getArea() {
     return width * height;
 }
 
-void Graphics::setColor(Uint8 r, Uint8 g, Uint8 b) {
-    SDL_SetRenderDrawColor(renderer, r, g, b, 255);
+void Graphics::setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
+    SDL_SetRenderDrawColor(renderer, r, g, b, a);
 }
 
 void Graphics::fillScreen(Uint8 r, Uint8 g, Uint8 b) {
@@ -43,8 +49,8 @@ void Graphics::drawPoint(int x, int y) {
     SDL_RenderDrawPoint(renderer, x, y);
 }
 
-void Graphics::drawPoint(int x, int y, Uint8 r, Uint8 g, Uint8 b) {
-    setColor(r, g, b);
+void Graphics::drawPoint(int x, int y, Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
+    setColor(r, g, b, a);
     SDL_RenderDrawPoint(renderer, x, y);
 }
 

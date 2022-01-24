@@ -1,9 +1,6 @@
-﻿// Graphics Test.cpp : Defines the entry point for the application.
-//
-
-#include "Graphics Test.h"
+﻿#include "Graphics Test.h"
 #include <SDL.h>
-#include <math.h>
+#include <vector>
 #include "Graphics/index.h"
 
 using namespace std;
@@ -14,35 +11,40 @@ int main(int argc, char* argv[]) {
     const int FPS = 24;										// Program FPS
 
 
-    // Initializes the timer, audio, video, joystick, haptic, gamecontroller and events subsystems
+    // Initializes the timer, audio, video, joystick, haptic, game controller and events subsystems
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
         printf("Error initializing SDL: %s\n", SDL_GetError());
-        return 0;
+        return -1;
     }
 
     // Create a window
-    SDL_Window* window = SDL_CreateWindow("", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_RESIZABLE);
+    SDL_Window* window = SDL_CreateWindow(__FILE__, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_RESIZABLE);
 
     if (!window) {
         printf("Error creating window: %s\n", SDL_GetError());
         SDL_Quit();
-        return 0;
+        return -1;
     }
 
     // Create a renderer
     Uint32 render_flags = SDL_RENDERER_ACCELERATED; // SDL_RENDERER_SOFTWARE
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, render_flags);
-
+    
     if (!renderer) {
         printf("Error creating renderer: %s\n", SDL_GetError());
         SDL_DestroyWindow(window);
         SDL_Quit();
-        return 0;
+        return -1;
     }
 
-    // Initialize a graphics object
-    Graphics* graphics = new CrawlingAnt(width, height, renderer);
+    // Set blend mode
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_ADD);
 
+    // Initialize a graphics object
+    //Graphics* graphics = new CrawlingAnt(width, height, renderer);
+    vector<Graphics*> graphics;
+    graphics.push_back(new Menu(width, height, renderer));
+    
     // Main loop
     SDL_Event event;
     bool running = true;
@@ -60,7 +62,7 @@ int main(int argc, char* argv[]) {
             
             case 8192: {
                 SDL_GetWindowSize(window, &width, &height);
-                graphics->setWindowSize(width, height);
+                graphics[0]->setWindowSize(width, height);
                 cout << "Size changed: " << width << ", " << height << endl;
                 break;
             }
@@ -69,20 +71,24 @@ int main(int argc, char* argv[]) {
                 switch (event.key.keysym.sym) {
                 case 27: { // Esc
                     // Display the menu
-                    graphics = new Menu(width, height, renderer);
+                    graphics.clear();
+                    graphics.push_back(new Menu(width, height, renderer));
                     paused = true;
                     break;
                 }
 
                 case 49: { // 1
-                    // Draw gaussian bumps of increasing size
-                    graphics = new GaussianBump(width, height, renderer);
+                    // Draw Gaussian bumps of increasing size
+                    graphics.clear();
+                    graphics.push_back(new GaussianBump(width, height, renderer));
                     break;
                 }
 
                 case 50: { // 2
                     // Draw a virtual ant that leaves a trail on the screen
-                    graphics = new CrawlingAnt(width, height, renderer);
+                    graphics.clear();
+                    graphics.push_back(new CrawlingAnt(width, height, renderer, 255, 255, 0, 178));
+                    graphics.push_back(new CrawlingAnt(width, height, renderer, 255, 0, 0, 178));
                     break;
                 }
 
@@ -102,23 +108,35 @@ int main(int argc, char* argv[]) {
                 case 54: { // 6
                     break;
                 }
+                */
 
                 case 55: { // 7
+                    // Set blend mode
+                    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_MUL);
+
                     break;
                 }
 
                 case 56: { // 8
+                    // Set blend mode
+                    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_MOD);
+
                     break;
                 }
 
                 case 57: { // 9
+                    // Set blend mode
+                    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_ADD);
+
                     break;
                 }
 
                 case 48: { // 0
+                    // Set blend mode
+                    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+
                     break;
                 }
-                */
 
                 // a is 97, b is 98, ...
 
@@ -129,7 +147,7 @@ int main(int argc, char* argv[]) {
                 }
 
                 default: {
-                    // Print out unmapped keystokes
+                    // Print out unmapped keystrokes
                     cout << "Sym: " << event.key.keysym.sym << endl;
                 }
                 }
@@ -144,7 +162,9 @@ int main(int argc, char* argv[]) {
 
         // Only update if unpaused
         if (!paused) {
-            graphics->update();
+            for (Graphics* graph : graphics) {
+                graph->update();
+            }
         }
 
         SDL_Delay(1000 / FPS);
