@@ -1,16 +1,20 @@
 #include "Graphics.h"
 
+void Graphics::setRenderer(SDL_Renderer* rend) {
+    renderer = rend;
+}
+
 Graphics::Graphics() {
     setWindowSize(0, 0);
     setWindow(nullptr);
-    renderer = nullptr;
+    setRenderer(nullptr);
     fillScreen();
 }
 
 Graphics::Graphics(int window_width, int window_height, SDL_Window* win) {
     setWindowSize(window_height, window_height);
     setWindow(win);
-    renderer = SDL_GetRenderer(window);
+    setRenderer(SDL_GetRenderer(window));
     fillScreen();
 }
 

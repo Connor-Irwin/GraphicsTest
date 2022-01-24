@@ -7,6 +7,7 @@ protected:
 	SDL_Renderer* renderer;
 	SDL_Window* window;
 	int width, height;
+	void setRenderer(SDL_Renderer* rend);
 
 public:
 	Graphics();

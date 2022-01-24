@@ -3,7 +3,7 @@
 Menu::Menu(int window_width, int window_height, SDL_Window* win) {
 	setWindowSize(window_height, window_height);
 	setWindow(win);
-	renderer = SDL_GetRenderer(window);
+	setRenderer(SDL_GetRenderer(window));
 	fillScreen();
 }
 

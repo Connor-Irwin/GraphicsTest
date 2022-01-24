@@ -46,9 +46,6 @@ void CrawlingAnt::update() {
 
     direction = rand() % 5;
 
-    //int x_move = rand() % width;
-    //int y_move = rand() % height;
-
     switch (direction) {
     case 1: { // East
         if (dist_from_east_edge < dist_from_center / edginess || x > width) direction = rand() % 5;
