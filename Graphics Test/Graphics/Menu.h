@@ -4,6 +4,6 @@
 
 class Menu : public Graphics {
 public:
-	Menu(int window_width, int window_height, SDL_Renderer* rend, SDL_Window* win = nullptr);
+	Menu(int window_width, int window_height, SDL_Window* win);
 	void update();
 };

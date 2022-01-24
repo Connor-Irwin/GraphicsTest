@@ -38,12 +38,12 @@ int main(int argc, char* argv[]) {
     }
 
     // Set blend mode
-    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_ADD);
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 
     // Initialize a graphics object
     //Graphics* graphics = new CrawlingAnt(width, height, renderer);
     vector<Graphics*> graphics;
-    graphics.push_back(new Menu(width, height, renderer));
+    graphics.push_back(new Menu(width, height, window));
     
     // Main loop
     SDL_Event event;
@@ -72,7 +72,7 @@ int main(int argc, char* argv[]) {
                 case 27: { // Esc
                     // Display the menu
                     graphics.clear();
-                    graphics.push_back(new Menu(width, height, renderer));
+                    graphics.push_back(new Menu(width, height, window));
                     paused = true;
                     break;
                 }
@@ -80,15 +80,15 @@ int main(int argc, char* argv[]) {
                 case 49: { // 1
                     // Draw Gaussian bumps of increasing size
                     graphics.clear();
-                    graphics.push_back(new GaussianBump(width, height, renderer));
+                    graphics.push_back(new GaussianBump(width, height, window));
                     break;
                 }
 
                 case 50: { // 2
                     // Draw a virtual ant that leaves a trail on the screen
                     graphics.clear();
-                    graphics.push_back(new CrawlingAnt(width, height, renderer, 255, 255, 0, 178));
-                    graphics.push_back(new CrawlingAnt(width, height, renderer, 255, 0, 0, 178));
+                    graphics.push_back(new CrawlingAnt(width, height, window, 255, 255, 0, 178));
+                    graphics.push_back(new CrawlingAnt(width, height, window, 255, 0, 0, 178));
                     break;
                 }
 

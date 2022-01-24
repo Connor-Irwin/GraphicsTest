@@ -2,15 +2,15 @@
 
 Graphics::Graphics() {
     setWindowSize(0, 0);
-    setRenderer(nullptr);
     setWindow(nullptr);
+    renderer = nullptr;
     fillScreen();
 }
 
-Graphics::Graphics(int window_width, int window_height, SDL_Renderer* rend, SDL_Window* win = nullptr) {
+Graphics::Graphics(int window_width, int window_height, SDL_Window* win) {
     setWindowSize(window_height, window_height);
-    setRenderer(rend);
     setWindow(win);
+    renderer = SDL_GetRenderer(window);
     fillScreen();
 }
 
@@ -19,20 +19,12 @@ void Graphics::setWindowSize(int window_width, int window_height) {
     height = window_height;
 }
 
-void Graphics::setRenderer(SDL_Renderer* rend) {
-    renderer = rend;
-}
-
 void Graphics::setWindow(SDL_Window* win) {
     window = win;
 }
 
 void Graphics::present() {
     SDL_RenderPresent(renderer);
-}
-
-int Graphics::getArea() {
-    return width * height;
 }
 
 void Graphics::setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
