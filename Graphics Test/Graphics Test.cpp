@@ -55,36 +55,36 @@ int main(int argc, char* argv[]) {
         while (SDL_PollEvent(&event)) {
             switch (event.type) {
             case SDL_QUIT: {
+                // Stop when the window close button is pressed
                 running = false;
                 printf("Exiting (do not close window)...\n");
                 break;
             }
             
-            case 8192: {
+            case SDL_WINDOWEVENT: {
+                // If the window is resized, update the graphics object's window size
                 SDL_GetWindowSize(window, &width, &height);
                 graphics[0]->setWindowSize(width, height);
-                cout << "Size changed: " << width << ", " << height << endl;
                 break;
             }
 
             case SDL_KEYDOWN: {
                 switch (event.key.keysym.sym) {
-                case 27: { // Esc
+                case SDLK_ESCAPE: {
                     // Display the menu
                     graphics.clear();
                     graphics.push_back(new Menu(width, height, window));
-                    paused = true;
                     break;
                 }
 
-                case 49: { // 1
+                case SDLK_1: {
                     // Draw Gaussian bumps of increasing size
                     graphics.clear();
                     graphics.push_back(new GaussianBump(width, height, window));
                     break;
                 }
 
-                case 50: { // 2
+                case SDLK_2: {
                     // Draw a virtual ant that leaves a trail on the screen
                     graphics.clear();
                     graphics.push_back(new CrawlingAnt(width, height, window, 255, 255, 0, 178));
@@ -92,55 +92,31 @@ int main(int argc, char* argv[]) {
                     break;
                 }
 
-                /*
-                case 51: { // 3
-                    break;
-                }
-
-                case 52: { // 4
-                    break;
-                }
-
-                case 53: { // 5
-                    break;
-                }
-
-                case 54: { // 6
-                    break;
-                }
-                */
-
-                case 55: { // 7
+                case SDLK_7: {
                     // Set blend mode
                     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_MUL);
-
                     break;
                 }
 
-                case 56: { // 8
+                case SDLK_8: {
                     // Set blend mode
                     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_MOD);
-
                     break;
                 }
 
-                case 57: { // 9
+                case SDLK_9: {
                     // Set blend mode
                     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_ADD);
-
                     break;
                 }
 
-                case 48: { // 0
+                case SDLK_0: {
                     // Set blend mode
                     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-
                     break;
                 }
 
-                // a is 97, b is 98, ...
-
-                case 112: { // p
+                case SDLK_p: { // p
                     // Toggle if the demos are paused or unpaused
                     paused = !paused;
                     break;
