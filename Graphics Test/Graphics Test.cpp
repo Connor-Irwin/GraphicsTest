@@ -6,7 +6,7 @@
 using namespace std;
 
 int main(int argc, char* argv[]) {
-    int width = 100;	                                    // Width Height of SDL window
+    int width = 250;	                                    // Width Height of SDL window
     int height = width;									    // Height of window
     const int FPS = 24;										// Program FPS
 
@@ -40,10 +40,8 @@ int main(int argc, char* argv[]) {
     // Set blend mode
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 
-    // Initialize a graphics object
-    //Graphics* graphics = new CrawlingAnt(width, height, renderer);
-    vector<Graphics*> graphics;
-    graphics.push_back(new Menu(width, height, window));
+    // Initialize a graphics object vector
+    vector<Graphics*> graphics{ new Menu(width, height, window) };
     
     // Main loop
     SDL_Event event;
