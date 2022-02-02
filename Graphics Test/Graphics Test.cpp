@@ -5,7 +5,7 @@
 
 using namespace std;
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
     int width = 250;	                                    // Width Height of SDL window
     int height = width;									    // Height of window
     const int FPS = 24;										// Program FPS
@@ -18,7 +18,7 @@ int main(int argc, char* argv[]) {
     }
 
     // Create a window
-    SDL_Window* window = SDL_CreateWindow(__FILE__, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_RESIZABLE);
+    SDL_Window *window = SDL_CreateWindow(__FILE__, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_RESIZABLE);
 
     if (!window) {
         printf("Error creating window: %s\n", SDL_GetError());
@@ -28,7 +28,7 @@ int main(int argc, char* argv[]) {
 
     // Create a renderer
     Uint32 render_flags = SDL_RENDERER_ACCELERATED; // SDL_RENDERER_SOFTWARE
-    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, render_flags);
+    SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, render_flags);
     
     if (!renderer) {
         printf("Error creating renderer: %s\n", SDL_GetError());
@@ -62,7 +62,12 @@ int main(int argc, char* argv[]) {
             case SDL_WINDOWEVENT: {
                 // If the window is resized, update the graphics object's window size
                 SDL_GetWindowSize(window, &width, &height);
-                graphics[0]->setWindowSize(width, height);
+
+                for (Graphics* graphic : graphics) {
+                    graphic->setWindowSize(width, height);
+                    graphic->update();
+                }
+
                 break;
             }
 
@@ -136,8 +141,8 @@ int main(int argc, char* argv[]) {
 
         // Only update if unpaused
         if (!paused) {
-            for (Graphics* graph : graphics) {
-                graph->update();
+            for (Graphics *graphic : graphics) {
+                graphic->update();
             }
         }
 

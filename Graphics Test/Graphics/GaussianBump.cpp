@@ -4,7 +4,7 @@ double GaussianBump::bump(double x, double y, double x0, double y0, double sX, d
     return SDL_exp(-((SDL_pow((x - x0), 2)) / (2 * SDL_pow(sX, 2)) + (SDL_pow((y - y0), 2)) / (2 * SDL_pow(sY, 2))));
 }
 
-GaussianBump::GaussianBump(int window_width, int window_height, SDL_Window* win) {
+GaussianBump::GaussianBump(int window_width, int window_height, SDL_Window *win) {
     setWindowSize(window_height, window_height);
     setWindow(win);
     renderer = SDL_GetRenderer(window);

@@ -1,6 +1,6 @@
 #include "Graphics.h"
 
-void Graphics::setRenderer(SDL_Renderer* rend) {
+void Graphics::setRenderer(SDL_Renderer *rend) {
     renderer = rend;
 }
 
@@ -11,7 +11,7 @@ Graphics::Graphics() {
     fillScreen();
 }
 
-Graphics::Graphics(int window_width, int window_height, SDL_Window* win) {
+Graphics::Graphics(int window_width, int window_height, SDL_Window *win) {
     setWindowSize(window_height, window_height);
     setWindow(win);
     setRenderer(SDL_GetRenderer(window));
@@ -23,7 +23,7 @@ void Graphics::setWindowSize(int window_width, int window_height) {
     height = window_height;
 }
 
-void Graphics::setWindow(SDL_Window* win) {
+void Graphics::setWindow(SDL_Window *win) {
     window = win;
 }
 

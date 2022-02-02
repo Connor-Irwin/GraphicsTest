@@ -1,7 +1,7 @@
 #include "CrawlingAnt.h"
 #include <iostream>
 
-CrawlingAnt::CrawlingAnt(int window_width, int window_height, SDL_Window* win) {
+CrawlingAnt::CrawlingAnt(int window_width, int window_height, SDL_Window *win) {
     setWindowSize(window_height, window_height);
     setWindow(win);
     renderer = SDL_GetRenderer(window);
@@ -19,7 +19,7 @@ CrawlingAnt::CrawlingAnt(int window_width, int window_height, SDL_Window* win) {
     fillScreen();
 }
 
-CrawlingAnt::CrawlingAnt(int window_width, int window_height, SDL_Window* win, Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
+CrawlingAnt::CrawlingAnt(int window_width, int window_height, SDL_Window *win, Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
     setWindowSize(window_height, window_height);
     setWindow(win);
     renderer = SDL_GetRenderer(window);

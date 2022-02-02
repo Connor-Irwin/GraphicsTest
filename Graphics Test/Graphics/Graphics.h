@@ -4,17 +4,17 @@
 
 class Graphics {
 protected:
-	SDL_Renderer* renderer;
-	SDL_Window* window;
+	SDL_Renderer *renderer;
+	SDL_Window *window;
 	int width, height;
-	void setRenderer(SDL_Renderer* rend);
+	void setRenderer(SDL_Renderer *rend);
 
 public:
 	Graphics();
-	Graphics(int window_width, int window_height, SDL_Window* win);
+	Graphics(int window_width, int window_height, SDL_Window *win);
 
 	void setWindowSize(int window_width, int window_height);
-	void setWindow(SDL_Window* win);
+	void setWindow(SDL_Window *win);
 
 	void present();
 	void setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255);
