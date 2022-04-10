@@ -11,7 +11,9 @@ GaussianBump::GaussianBump(int window_width, int window_height, SDL_Window *win)
 
     size = 1;
 
+    SDL_RenderSetScale(SDL_GetRenderer(window), 1, 1);
     fillScreen();
+    present();
 }
 
 void GaussianBump::update() {

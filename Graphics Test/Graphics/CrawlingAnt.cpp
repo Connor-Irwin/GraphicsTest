@@ -6,8 +6,8 @@ CrawlingAnt::CrawlingAnt(int window_width, int window_height, SDL_Window *win) {
     setWindow(win);
     renderer = SDL_GetRenderer(window);
 
-    x = window_width / 2;
-    y = window_height / 2;
+    x = window_width / 10;  // Devide by 2 to center it,
+    y = window_height / 10; // then by 5 to counteract the render scale.
 
     edginess = 1;
 
@@ -16,7 +16,11 @@ CrawlingAnt::CrawlingAnt(int window_width, int window_height, SDL_Window *win) {
     b = 0;
     a = 255;
 
+    direction = 0;
+
+    SDL_RenderSetScale(SDL_GetRenderer(window), 5, 5);
     fillScreen();
+    present();
 }
 
 CrawlingAnt::CrawlingAnt(int window_width, int window_height, SDL_Window *win, Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
@@ -24,8 +28,8 @@ CrawlingAnt::CrawlingAnt(int window_width, int window_height, SDL_Window *win, U
     setWindow(win);
     renderer = SDL_GetRenderer(window);
 
-    x = window_width / 2;
-    y = window_height / 2;
+    x = window_width / 10;  // Devide by 2 to center it,
+    y = window_height / 10; // then by 5 to counteract the render scale.
 
     edginess = 1;
 
@@ -34,22 +38,18 @@ CrawlingAnt::CrawlingAnt(int window_width, int window_height, SDL_Window *win, U
     this->b = b;
     this->a = a;
 
+    direction = 0;
+
+    SDL_RenderSetScale(SDL_GetRenderer(window), 5, 5);
 	fillScreen();
+    present();
 }
 
 void CrawlingAnt::update() {
-    dist_from_center = (int)distance(x, y, width / 2, height / 2);
-    dist_from_east_edge = (int)distance(x, y, width, y);
-    dist_from_west_edge = (int)distance(x, y, 0, y);
-    dist_from_south_edge = (int)distance(x, y, x, height);
-    dist_from_north_edge = (int)distance(x, y, x, 0);
-
     direction = rand() % 5;
 
     switch (direction) {
     case 1: { // East
-        if (dist_from_east_edge < dist_from_center / edginess || x > width) direction = rand() % 5;
-
         if (x < width - 1) {
             x++;
             drawPoint(x, y, r, g, b, a);
@@ -61,8 +61,6 @@ void CrawlingAnt::update() {
     }
 
     case 2: { // West
-        if (dist_from_west_edge < dist_from_center / edginess || x < 0) direction = rand() % 5;
-
         if (x > 0) {
             x--;
             drawPoint(x, y, r, g, b, a);
@@ -74,7 +72,7 @@ void CrawlingAnt::update() {
     }
 
     case 3: { // South
-        if (dist_from_south_edge < dist_from_center / edginess || y > height) direction = rand() % 5;
+        // if (dist_from_south_edge < dist_from_center / edginess || y > height) direction = rand() % 5;
 
         if (y < height - 1) {
             y++;
@@ -87,8 +85,6 @@ void CrawlingAnt::update() {
     }
 
     case 4: { // North
-        if (dist_from_north_edge < dist_from_center / edginess || y < 0) direction = rand() % 5;
-
         if (y > 0) {
             y--;
             drawPoint(x, y, r, g, b, a);
@@ -96,10 +92,6 @@ void CrawlingAnt::update() {
             drawPoint(x, y, r, g, b, a);
         }
 
-        break;
-    }
-
-    default: {
         break;
     }
     }

@@ -8,7 +8,11 @@ find_package (SDL2 REQUIRED)
 include_directories (${SDL2_INCLUDE_DIRS})
 
 # Add source to this project's executable.
-add_executable (CMakeTarget "Graphics Test.cpp" "Graphics Test.h" "Graphics/Graphics.h" "Graphics/Graphics.cpp" "Graphics/CrawlingAnt.h" "Graphics/CrawlingAnt.cpp" "Graphics/GaussianBump.cpp" "Graphics/GaussianBump.h" "Graphics/index.h" "Graphics/Menu.cpp" "Graphics/Menu.h")
+add_executable (CMakeTarget "Graphics Test.cpp" "Graphics/Graphics.cpp" "Graphics/CrawlingAnt.cpp" "Graphics/GaussianBump.cpp" "Graphics/Menu.cpp" "Graphics/GameOfLife.cpp" "Graphics/RayTracerMaze.cpp")
+
+if (WIN32 AND CMAKE_BUILD_TYPE STREQUAL "Release")
+	add_executable (CMakeTarget WIN32)
+endif()
 
 # Set the name of the output executable
 set_target_properties(CMakeTarget PROPERTIES OUTPUT_NAME "Graphics Test")

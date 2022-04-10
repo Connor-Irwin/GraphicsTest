@@ -6,10 +6,8 @@
 using namespace std;
 
 int main(int argc, char *argv[]) {
-    int width = 250;	                                    // Width Height of SDL window
-    int height = width;									    // Height of window
-    const int FPS = 24;										// Program FPS
-
+    int width = 300; // Width Height of SDL window
+    int height = width; // Height of window
 
     // Initializes the timer, audio, video, joystick, haptic, game controller and events subsystems
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
@@ -61,12 +59,15 @@ int main(int argc, char *argv[]) {
             
             case SDL_WINDOWEVENT: {
                 // If the window is resized, update the graphics object's window size
-                SDL_GetWindowSize(window, &width, &height);
 
-                for (Graphics* graphic : graphics) {
-                    graphic->setWindowSize(width, height);
-                    graphic->update();
-                }
+                //for (Graphics* graphic : graphics) {
+                //    graphic->setWindowSize(width, height);
+                //    graphic->update();
+                //}
+
+                SDL_GetWindowSize(window, &width, &height);
+                graphics[0]->setWindowSize(width, height);
+                graphics[0]->update();
 
                 break;
             }
@@ -91,7 +92,21 @@ int main(int argc, char *argv[]) {
                     // Draw a virtual ant that leaves a trail on the screen
                     graphics.clear();
                     graphics.push_back(new CrawlingAnt(width, height, window, 255, 255, 0, 178));
-                    graphics.push_back(new CrawlingAnt(width, height, window, 255, 0, 0, 178));
+                    //graphics.push_back(new CrawlingAnt(width, height, window, 255, 0, 0, 178));
+                    break;
+                }
+
+                case SDLK_3: {
+                    // Display a game of Conway's Game of Life
+                    graphics.clear();
+                    graphics.push_back(new GameOfLife(width, height, window, 10, 10));
+                    break;
+                }
+
+                case SDLK_4: {
+                    // Display an interactive ray tracer maze
+                    graphics.clear();
+                    graphics.push_back(new RayTracerMaze(width, height, window));
                     break;
                 }
 
@@ -126,15 +141,11 @@ int main(int argc, char *argv[]) {
                 }
 
                 default: {
-                    // Print out unmapped keystrokes
-                    cout << "Sym: " << event.key.keysym.sym << endl;
+                    // Pass key press to graphics object
+                    graphics[0]->keyPress(event.key.keysym.sym);
+                    break;
                 }
                 }
-            }
-
-            default: {
-                cout << "Uncaught event: " << event.type << endl;
-                break;
             }
             }
         }
@@ -146,7 +157,7 @@ int main(int argc, char *argv[]) {
             }
         }
 
-        SDL_Delay(1000 / FPS);
+        SDL_Delay(1000 / graphics[0]->getFPS());
     }
 
     // Release resources
