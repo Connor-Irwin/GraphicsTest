@@ -7,7 +7,6 @@ CrawlingAnt::CrawlingAnt(int window_width, int window_height, SDL_Window *win) {
     renderer = SDL_GetRenderer(window);
 
     x = window_width / 10;  // Divide by 2 to center it,
->>>>>>> fb664c1893a1f4c941df0cbfbdb95306facde140
     y = window_height / 10; // then by 5 to counteract the render scale.
 
     edginess = 1;
