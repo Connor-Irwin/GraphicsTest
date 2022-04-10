@@ -6,7 +6,7 @@ CrawlingAnt::CrawlingAnt(int window_width, int window_height, SDL_Window *win) {
     setWindow(win);
     renderer = SDL_GetRenderer(window);
 
-    x = window_width / 10;  // Devide by 2 to center it,
+    x = window_width / 10;  // Divide by 2 to center it,
     y = window_height / 10; // then by 5 to counteract the render scale.
 
     edginess = 1;
@@ -28,7 +28,7 @@ CrawlingAnt::CrawlingAnt(int window_width, int window_height, SDL_Window *win, U
     setWindow(win);
     renderer = SDL_GetRenderer(window);
 
-    x = window_width / 10;  // Devide by 2 to center it,
+    x = window_width / 10;  // Divide by 2 to center it,
     y = window_height / 10; // then by 5 to counteract the render scale.
 
     edginess = 1;
@@ -72,8 +72,6 @@ void CrawlingAnt::update() {
     }
 
     case 3: { // South
-        // if (dist_from_south_edge < dist_from_center / edginess || y > height) direction = rand() % 5;
-
         if (y < height - 1) {
             y++;
             drawPoint(x, y, r, g, b, a);
